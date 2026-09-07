@@ -23,6 +23,10 @@ export function AuthProvider({ children }) {
     return readProfile(savedRole)
   })
 
+  const [token, setToken] = useState(() => {
+    return localStorage.getItem('smaran_token')
+  })
+
   useEffect(() => {
     if (role) {
       localStorage.setItem('smaran_role', role)
@@ -31,10 +35,13 @@ export function AuthProvider({ children }) {
     }
   }, [role])
 
-  const login = (selectedRole) => {
-    setRole(selectedRole)
-    setProfile(readProfile(selectedRole))
-  }
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem('smaran_token', token)
+    } else {
+      localStorage.removeItem('smaran_token')
+    }
+  }, [token])
 
   const signup = async (selectedRole, email, password) => {
     const response = await fetch('http://localhost:8080/api/auth/signup', {
@@ -63,6 +70,34 @@ export function AuthProvider({ children }) {
     return data
   }
 
+  const login = async (selectedRole, email, password) => {
+    const response = await fetch('http://localhost:8080/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        password,
+        role: selectedRole.toUpperCase(),
+      }),
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Login failed')
+    }
+
+    setToken(data.token)
+    setRole(selectedRole)
+    setProfile({
+      userId: data.id,
+      email: data.email,
+      profileCompleted: data.profileCompleted,
+    })
+
+    return data
+  }
+
   const saveProfile = (profileData) => {
     if (!role) return
     localStorage.setItem(
@@ -79,6 +114,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     setRole(null)
     setProfile(null)
+    setToken(null)
   }
 
   return (
@@ -86,6 +122,7 @@ export function AuthProvider({ children }) {
       value={{
         role,
         profile,
+        token,
         login,
         logout,
         saveProfile,
