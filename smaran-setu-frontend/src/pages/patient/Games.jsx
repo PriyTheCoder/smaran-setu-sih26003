@@ -35,16 +35,16 @@ export default function Games() {
 
             <div className="flex items-center gap-2">
               <Brain size={22} />
-              <p className="text-sm font-bold uppercase tracking-wide text-white/75">
+              <p className="text-sm font-bold uppercase tracking-wide text-[#17345f]">
                 Brain Time
               </p>
             </div>
 
-            <h1 className="mt-2 text-3xl font-black sm:text-4xl">
+            <h1 className="mt-2 text-3xl font-black sm:text-[#17345f]">
               Let&apos;s have some fun! 🧩
             </h1>
 
-            <p className="mt-3 text-base leading-7 text-white/80 sm:text-lg">
+            <p className="mt-3 text-base leading-7 text-[#17345f] sm:text-lg">
               Choose a game you enjoy and take your time.
               There is no rush — just have fun.
             </p>

@@ -1,5 +1,7 @@
+
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+
 import {
   ArrowLeft,
   CheckCircle2,
@@ -14,6 +16,7 @@ import {
 
 import { games } from '../../data/games'
 import Button from '../../components/common/Button'
+import MemoryMatch from '../../components/patient/MemoryMatch'
 
 const gameQuestions = {
   memory: [
@@ -94,35 +97,35 @@ const gameQuestions = {
 
   number: [
     {
-      emoji: '1  →  2  →  3  →  ?',
+      emoji: '1 → 2 → 3 → ?',
       instruction: 'Find the next number.',
       question: 'Which number comes next?',
       options: ['4', '5', '6', '7'],
       answer: '4',
     },
     {
-      emoji: '2  →  4  →  6  →  ?',
+      emoji: '2 → 4 → 6 → ?',
       instruction: 'Find the next number.',
       question: 'Which number comes next?',
       options: ['7', '8', '9', '10'],
       answer: '8',
     },
     {
-      emoji: '5  →  10  →  15  →  ?',
+      emoji: '5 → 10 → 15 → ?',
       instruction: 'Find the next number.',
       question: 'Which number comes next?',
       options: ['18', '20', '22', '25'],
       answer: '20',
     },
     {
-      emoji: '10  →  9  →  8  →  ?',
+      emoji: '10 → 9 → 8 → ?',
       instruction: 'Find the next number.',
       question: 'Which number comes next?',
       options: ['5', '6', '7', '8'],
       answer: '7',
     },
     {
-      emoji: '3  →  6  →  9  →  ?',
+      emoji: '3 → 6 → 9 → ?',
       instruction: 'Find the next number.',
       question: 'Which number comes next?',
       options: ['10', '11', '12', '13'],
@@ -182,7 +185,8 @@ export default function GamePlay() {
 
   const game = games.find((g) => g.id === gameId) || games[0]
 
-  const questions = gameQuestions[game.type] || gameQuestions.memory
+  const questions =
+    gameQuestions[game.type] || gameQuestions.memory
 
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState('')
@@ -192,8 +196,97 @@ export default function GamePlay() {
   const question = questions[currentQuestion]
   const Icon = iconMap[game.type] || Brain
 
+  /*
+   * MEMORY MATCH
+   *
+   * MemoryMatch is now a completely separate playable game.
+   * When it finishes, this function saves the result and
+   * sends the patient to the result page.
+   */
+  const handleMemoryMatchComplete = (result) => {
+    const previousResults = JSON.parse(
+      localStorage.getItem('gameResults') || '[]'
+    )
+
+    localStorage.setItem(
+      'gameResults',
+      JSON.stringify([
+        ...previousResults,
+        result,
+      ])
+    )
+
+    navigate('/user/result', {
+      state: {
+        game: result.game,
+        gameId: result.gameId,
+        gameType: result.gameType,
+        score: result.score,
+        correctAnswers: result.correctAnswers,
+        totalQuestions: result.totalQuestions,
+        moves: result.moves,
+        timeSeconds: result.timeSeconds,
+      },
+    })
+  }
+
+  /*
+   * MEMORY MATCH SCREEN
+   *
+   * We return early only for the actual Memory Match game.
+   * Picture, Number and Object games continue using the
+   * original question-based UI below.
+   */
+  if (game.type === 'memory') {
+    return (
+      <div className="mx-auto max-w-3xl pb-8">
+        <button
+          type="button"
+          onClick={() => navigate('/user/games')}
+          className="mb-5 flex items-center gap-2 rounded-xl px-2 py-2 font-bold text-slate-600 transition hover:bg-white hover:text-[#2f8f92] dark:text-slate-300 dark:hover:bg-slate-800"
+        >
+          <ArrowLeft size={19} />
+          Back to games
+        </button>
+
+        <div className="card overflow-hidden">
+          <div className="border-b border-slate-100 p-6 dark:border-slate-700 sm:p-8">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#e8f4f2] text-[#2f8f92] dark:bg-slate-700">
+                  <Brain size={28} />
+                </div>
+
+                <div>
+                  <p className="text-sm font-bold uppercase tracking-wide text-[#2f8f92]">
+                    Cognitive Activity
+                  </p>
+
+                  <h1 className="mt-1 text-2xl font-black text-[#17345f] dark:text-white sm:text-3xl">
+                    Memory Match
+                  </h1>
+                </div>
+              </div>
+
+              <div className="hidden items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm font-bold text-slate-600 dark:bg-slate-700 dark:text-slate-200 sm:flex">
+                <Clock3 size={16} />
+                2 min
+              </div>
+            </div>
+          </div>
+
+          <div className="p-5 sm:p-8">
+            <MemoryMatch
+              onComplete={handleMemoryMatchComplete}
+            />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   const progress = Math.round(
-    ((currentQuestion + 1) / questions.length) * 100,
+    ((currentQuestion + 1) / questions.length) * 100
   )
 
   const handleAnswer = (option) => {
@@ -215,51 +308,59 @@ export default function GamePlay() {
       return
     }
 
+    /*
+     * Activity finished.
+     * Calculate final score and save result.
+     */
     const finalScore =
       score + (selectedAnswer === question.answer ? 1 : 0)
 
     const percentage = Math.round(
-      (finalScore / questions.length) * 100,
+      (finalScore / questions.length) * 100
     )
 
-   const result = {
-  gameId: game.id,
-  game: game.title,
-  gameType: game.type,
-  correctAnswers: finalScore,
-  totalQuestions: questions.length,
-  score: percentage,
-  date: new Date().toLocaleDateString(),
-  timestamp: Date.now(),
-}
+    const result = {
+      gameId: game.id,
+      game: game.title,
+      gameType: game.type,
+      correctAnswers: finalScore,
+      totalQuestions: questions.length,
+      score: percentage,
+      date: new Date().toLocaleDateString(),
+      timestamp: Date.now(),
+    }
 
-const previousResults = JSON.parse(
-  localStorage.getItem('gameResults') || '[]'
-)
+    const previousResults = JSON.parse(
+      localStorage.getItem('gameResults') || '[]'
+    )
 
-localStorage.setItem(
-  'gameResults',
-  JSON.stringify([...previousResults, result])
-)
+    localStorage.setItem(
+      'gameResults',
+      JSON.stringify([
+        ...previousResults,
+        result,
+      ])
+    )
 
-navigate('/user/result', {
-  state: {
-    game: game.title,
-    gameId: game.id,
-    gameType: game.type,
-    score: percentage,
-    correctAnswers: finalScore,
-    totalQuestions: questions.length,
-  },
-})
+    navigate('/user/result', {
+      state: {
+        game: game.title,
+        gameId: game.id,
+        gameType: game.type,
+        score: percentage,
+        correctAnswers: finalScore,
+        totalQuestions: questions.length,
+      },
+    })
   }
 
   return (
     <div className="mx-auto max-w-3xl pb-8">
       {/* Back button */}
       <button
+        type="button"
         onClick={() => navigate('/user/games')}
-        className="mb-5 flex items-center gap-2 rounded-xl px-2 py-2 font-bold text-slate-600 transition hover:bg-white hover:text-[#2f8f92]"
+        className="mb-5 flex items-center gap-2 rounded-xl px-2 py-2 font-bold text-slate-600 transition hover:bg-white hover:text-[#2f8f92] dark:text-slate-300 dark:hover:bg-slate-800"
       >
         <ArrowLeft size={19} />
         Back to games
@@ -267,10 +368,10 @@ navigate('/user/result', {
 
       <div className="card overflow-hidden">
         {/* Header */}
-        <div className="border-b border-slate-100 p-6 sm:p-8">
+        <div className="border-b border-slate-100 p-6 dark:border-slate-700 sm:p-8">
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-start gap-4">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#e8f4f2] text-[#2f8f92]">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#e8f4f2] text-[#2f8f92] dark:bg-slate-700">
                 <Icon size={28} />
               </div>
 
@@ -279,19 +380,19 @@ navigate('/user/result', {
                   Cognitive Activity
                 </p>
 
-                <h1 className="mt-1 text-2xl font-black text-[#17345f] sm:text-3xl">
+                <h1 className="mt-1 text-2xl font-black text-[#17345f] dark:text-white sm:text-3xl">
                   {game.title}
                 </h1>
               </div>
             </div>
 
-            <div className="hidden items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm font-bold text-slate-600 sm:flex">
+            <div className="hidden items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm font-bold text-slate-600 dark:bg-slate-700 dark:text-slate-200 sm:flex">
               <Clock3 size={16} />
               {game.duration}
             </div>
           </div>
 
-          <div className="mt-4 flex items-center gap-2 text-sm font-semibold text-slate-500 sm:hidden">
+          <div className="mt-4 flex items-center gap-2 text-sm font-semibold text-slate-500 dark:text-slate-300 sm:hidden">
             <Clock3 size={16} />
             {game.duration}
           </div>
@@ -299,7 +400,7 @@ navigate('/user/result', {
           {/* Progress */}
           <div className="mt-7">
             <div className="mb-2 flex items-center justify-between">
-              <span className="text-sm font-bold text-slate-500">
+              <span className="text-sm font-bold text-slate-500 dark:text-slate-300">
                 Question {currentQuestion + 1} of {questions.length}
               </span>
 
@@ -308,7 +409,7 @@ navigate('/user/result', {
               </span>
             </div>
 
-            <div className="h-3 overflow-hidden rounded-full bg-slate-100">
+            <div className="h-3 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-700">
               <div
                 className="h-full rounded-full bg-[#2f8f92] transition-all duration-500"
                 style={{ width: `${progress}%` }}
@@ -337,26 +438,29 @@ navigate('/user/result', {
               {question.instruction}
             </div>
 
-            <h2 className="mt-4 text-2xl font-black leading-tight text-[#17345f] sm:text-3xl">
+            <h2 className="mt-4 text-2xl font-black leading-tight text-[#17345f] dark:text-white sm:text-3xl">
               {question.question}
             </h2>
 
-            <p className="mx-auto mt-3 max-w-lg text-sm leading-6 text-slate-500 sm:text-base">
+            <p className="mx-auto mt-3 max-w-lg text-sm leading-6 text-slate-500 dark:text-slate-300 sm:text-base">
               Choose the answer that feels right to you.
             </p>
           </div>
 
           {/* Options */}
           <div className="mt-7">
-            <p className="mb-3 text-sm font-bold text-slate-500">
+            <p className="mb-3 text-sm font-bold text-slate-500 dark:text-slate-300">
               Choose an answer
             </p>
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {question.options.map((option, index) => {
                 const selected = selectedAnswer === option
+
                 const correct =
-                  showFeedback && option === question.answer
+                  showFeedback &&
+                  option === question.answer
+
                 const wrong =
                   showFeedback &&
                   selected &&
@@ -365,6 +469,7 @@ navigate('/user/result', {
                 return (
                   <button
                     key={option}
+                    type="button"
                     onClick={() => handleAnswer(option)}
                     disabled={showFeedback}
                     className={`
@@ -386,7 +491,7 @@ navigate('/user/result', {
                             ? 'border-red-300 bg-red-50'
                             : selected
                               ? 'border-[#2f8f92] bg-[#e8f4f2] shadow-md'
-                              : 'border-slate-200 bg-white hover:-translate-y-0.5 hover:border-[#9fcfca] hover:bg-[#f8fcfb]'
+                              : 'border-slate-200 bg-white hover:-translate-y-0.5 hover:border-[#9fcfca] hover:bg-[#f8fcfb] dark:border-slate-600 dark:bg-slate-800'
                       }
                     `}
                   >
@@ -408,7 +513,7 @@ navigate('/user/result', {
                               ? 'bg-red-400 text-white'
                               : selected
                                 ? 'bg-[#2f8f92] text-white'
-                                : 'bg-slate-100 text-slate-500'
+                                : 'bg-slate-100 text-slate-500 dark:bg-slate-700 dark:text-slate-300'
                         }
                       `}
                     >
@@ -421,10 +526,10 @@ navigate('/user/result', {
                         font-bold
                         ${
                           correct
-                            ? 'text-[#17345f]'
+                            ? 'text-[#17345f] dark:text-white'
                             : wrong
                               ? 'text-red-700'
-                              : 'text-slate-700'
+                              : 'text-slate-700 dark:text-slate-200'
                         }
                       `}
                     >
@@ -439,7 +544,9 @@ navigate('/user/result', {
                     )}
 
                     {wrong && (
-                      <span className="ml-auto text-xl">❌</span>
+                      <span className="ml-auto text-xl">
+                        ❌
+                      </span>
                     )}
                   </button>
                 )
@@ -449,25 +556,27 @@ navigate('/user/result', {
 
           {/* Feedback */}
           <div className="mt-5 min-h-13">
-            {showFeedback && selectedAnswer === question.answer && (
-              <div className="rounded-2xl bg-[#e8f4f2] p-4 text-center">
-                <p className="font-black text-[#2f8f92]">
-                  Wonderful! 🌟 That is correct.
-                </p>
-              </div>
-            )}
+            {showFeedback &&
+              selectedAnswer === question.answer && (
+                <div className="rounded-2xl bg-[#e8f4f2] p-4 text-center">
+                  <p className="font-black text-[#2f8f92]">
+                    Wonderful! 🌟 That is correct.
+                  </p>
+                </div>
+              )}
 
-            {showFeedback && selectedAnswer !== question.answer && (
-              <div className="rounded-2xl bg-[#fff5f5] p-4 text-center">
-                <p className="font-black text-slate-700">
-                  Good try! 💚 The correct answer is{' '}
-                  <span className="text-[#2f8f92]">
-                    {question.answer}
-                  </span>
-                  .
-                </p>
-              </div>
-            )}
+            {showFeedback &&
+              selectedAnswer !== question.answer && (
+                <div className="rounded-2xl bg-[#fff5f5] p-4 text-center">
+                  <p className="font-black text-slate-700">
+                    Good try! 💚 The correct answer is{' '}
+                    <span className="text-[#2f8f92]">
+                      {question.answer}
+                    </span>
+                    .
+                  </p>
+                </div>
+              )}
           </div>
 
           {/* Next button */}
@@ -491,3 +600,4 @@ navigate('/user/result', {
     </div>
   )
 }
+

@@ -78,12 +78,12 @@ export default function GameResult() {
 
             {/* Heading */}
 
-            <h1 className="mt-6 text-3xl font-black sm:text-4xl">
+            <h1 className="text-[#17345f] dark:text-[#17345f]">
               Well done! 🌟
             </h1>
 
 
-            <p className="mx-auto mt-3 max-w-md text-base leading-7 text-white/80">
+            <p className="text-slate-600 dark:text-[#17345f]">
               You completed your activity. Take a moment to feel proud of yourself.
             </p>
 

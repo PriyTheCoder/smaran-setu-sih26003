@@ -489,3 +489,196 @@ img {
     transition-duration: 0.01ms !important;
   }
 }
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(47, 143, 146, 0.08),
+      transparent 30%
+    ),
+    #0f172a;
+
+  color: #e5e7eb;
+}
+
+html.dark .page-shell {
+  background: #0f172a;
+}
+
+
+/* =========================================================
+   DARK MODE — CARDS
+   ========================================================= */
+
+html.dark .card {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+html.dark .card-hover:hover {
+  border-color: rgba(94, 234, 212, 0.35);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.3);
+}
+
+
+/* =========================================================
+   DARK MODE — TEXT
+   ========================================================= */
+
+html.dark .text-slate-800,
+html.dark .text-slate-700,
+html.dark .text-slate-600 {
+  color: #e2e8f0 !important;
+}
+
+html.dark .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+html.dark .text-slate-400 {
+  color: #94a3b8 !important;
+}
+
+
+/* =========================================================
+   DARK MODE — WHITE BACKGROUNDS
+   ========================================================= */
+
+html.dark .bg-white {
+  background-color: #1e293b !important;
+}
+
+html.dark .bg-slate-50 {
+  background-color: #172033 !important;
+}
+
+html.dark .bg-slate-100 {
+  background-color: #334155 !important;
+}
+
+
+/* =========================================================
+   DARK MODE — BORDERS
+   ========================================================= */
+
+html.dark .border-slate-100,
+html.dark .border-slate-200 {
+  border-color: #334155 !important;
+}
+
+
+/* =========================================================
+   DARK MODE — INPUTS
+   ========================================================= */
+
+html.dark .input,
+html.dark input,
+html.dark textarea,
+html.dark select {
+  background-color: #1e293b;
+  color: #e5e7eb;
+  border-color: #475569;
+}
+
+html.dark .input::placeholder,
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #94a3b8;
+}
+
+html.dark .input:hover {
+  border-color: #64748b;
+}
+
+
+/* =========================================================
+   DARK MODE — EXISTING SMARAN SETU COLORS
+   ========================================================= */
+
+html.dark .bg-\[\#f8fcfb\] {
+  background-color: #162420 !important;
+}
+
+html.dark .bg-\[\#e8f4f2\] {
+  background-color: #173d3d !important;
+}
+
+html.dark .bg-\[\#e8f2f0\] {
+  background-color: #173d3d !important;
+}
+
+html.dark .bg-\[\#f0ebfa\] {
+  background-color: #30264b !important;
+}
+
+html.dark .bg-\[\#fff4df\] {
+  background-color: #44351e !important;
+}
+
+
+/* =========================================================
+   DARK MODE — BUTTONS
+   ========================================================= */
+
+html.dark .btn-secondary {
+  background: #173d3d;
+  color: #e2e8f0;
+}
+
+html.dark .btn-secondary:hover {
+  background: #205252;
+}
+
+html.dark .btn-soft {
+  background: #334155;
+  color: #e2e8f0;
+}
+
+html.dark .btn-soft:hover {
+  background: #475569;
+}
+
+
+/* =========================================================
+   DARK MODE — SCROLLBAR
+   ========================================================= */
+
+html.dark ::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+
+/* =========================================================
+   DARK MODE — FOCUS
+   ========================================================= */
+
+html.dark :focus-visible {
+  outline-color: #5eead4;
+}
+
+
+/* =========================================================
+   DARK MODE — SELECTION
+   ========================================================= */
+
+html.dark ::selection {
+  background: rgba(94, 234, 212, 0.25);
+  color: #ffffff;
+}
