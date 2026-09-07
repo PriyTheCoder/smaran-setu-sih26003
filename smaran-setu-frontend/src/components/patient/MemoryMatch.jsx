@@ -289,7 +289,7 @@ export default function MemoryMatch({ onComplete }) {
 
       {/* Completion */}
       {completed && (
-        <div className="rounded-[30px] border border-[#b9ddd8] bg-gradient-to-br from-[#e8f4f2] to-[#f5fbfa] p-7 text-center dark:border-slate-600 dark:from-slate-800 dark:to-slate-800 sm:p-10">
+        <div className="rounded-[30px] border border-[#b9ddd8] bg-linear-to- from-[#e8f4f2] to-[#f5fbfa] p-7 text-center dark:border-slate-600 dark:from-slate-800 dark:to-slate-800 sm:p-10">
 
           <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#2f8f92] text-white shadow-lg">
             <Trophy size={38} />
