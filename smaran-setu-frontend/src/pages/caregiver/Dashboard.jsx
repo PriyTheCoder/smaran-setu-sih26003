@@ -36,6 +36,7 @@ export default function Dashboard() {
   const [routines, setRoutines] = useState([])
 
   useEffect(() => {
+  const refreshDashboard = () => {
     const savedResults = JSON.parse(
       localStorage.getItem('gameResults') || '[]'
     )
@@ -46,7 +47,24 @@ export default function Dashboard() {
 
     setResults(savedResults)
     setRoutines(savedRoutines)
-  }, [])
+  }
+
+  // Load immediately
+  refreshDashboard()
+
+  // Listen for patient activity changes
+  window.addEventListener(
+    'smaran-activity-updated',
+    refreshDashboard
+  )
+
+  return () => {
+    window.removeEventListener(
+      'smaran-activity-updated',
+      refreshDashboard
+    )
+  }
+}, [])
 
   /* =====================================================
      GAME STATISTICS

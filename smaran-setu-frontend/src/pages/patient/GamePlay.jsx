@@ -215,6 +215,9 @@ export default function GamePlay() {
         result,
       ])
     )
+    window.dispatchEvent(
+  new Event('smaran-activity-updated')
+)
 
     navigate('/user/result', {
       state: {
