@@ -22,20 +22,22 @@ export default function BasicDetails() {
   })
 
   useEffect(() => {
-    if (!role) {
-      navigate('/login', { replace: true })
-      return
-    }
+  // If user is not logged in, go to login
+  if (!role) {
+    navigate('/login', { replace: true })
+    return
+  }
 
-    if (profile) {
-      setForm({
-        name: profile.name || '',
-        age: profile.age || '',
-        gender: profile.gender || '',
-        mobile: profile.mobile || '',
-      })
+  // If profile already exists, this is NOT signup anymore.
+  // Send the user directly to their dashboard.
+  if (profile) {
+    if (role === 'user') {
+      navigate('/user/home', { replace: true })
+    } else {
+      navigate('/caregiver/dashboard', { replace: true })
     }
-  }, [role, profile, navigate])
+  }
+}, [role, profile, navigate])
 
   const handleChange = (event) => {
     const { name, value } = event.target
