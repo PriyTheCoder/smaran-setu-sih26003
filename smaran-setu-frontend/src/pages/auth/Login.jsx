@@ -1,38 +1,36 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-
 import Logo from '../../components/common/Logo'
 import Button from '../../components/common/Button'
-
 import { useAuth } from '../../context/AuthContext'
 
 export default function Login() {
   const [role, setRole] = useState('user')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
-  const {
-    login,
-    getProfile,
-  } = useAuth()
-
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const { login } = useAuth()
   const navigate = useNavigate()
 
-  const submit = (event) => {
+  const submit = async (event) => {
     event.preventDefault()
+    setError('')
+    setLoading(true)
+    try {
+      const data = await login(role, email, password)
 
-    const existingProfile = getProfile(role)
-
-    login(role)
-
-    if (existingProfile) {
-      if (role === 'user') {
-        navigate('/user/home', { replace: true })
+      if (data.profileCompleted) {
+        navigate(role === 'user' ? '/user/home' : '/caregiver/dashboard', {
+          replace: true,
+        })
       } else {
-        navigate('/caregiver/dashboard', { replace: true })
+        navigate('/setup-profile', { replace: true })
       }
-    } else {
-      navigate('/setup-profile', { replace: true })
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -40,16 +38,13 @@ export default function Login() {
     <main className="min-h-screen bg-[#f7f8f5] px-4 py-10 dark:bg-slate-950">
       <div className="mx-auto max-w-md">
         <Logo />
-
         <div className="card mt-8 p-7">
           <h1 className="text-2xl font-bold text-[#17345f] dark:text-white">
             Welcome back
           </h1>
-
           <p className="mt-2 text-slate-500 dark:text-slate-300">
             Choose your account type and continue.
           </p>
-
           <div className="mt-6 grid grid-cols-2 gap-2 rounded-2xl bg-slate-100 p-1 dark:bg-slate-800">
             <button
               type="button"
@@ -62,7 +57,6 @@ export default function Login() {
             >
               User
             </button>
-
             <button
               type="button"
               onClick={() => setRole('caregiver')}
@@ -75,14 +69,9 @@ export default function Login() {
               Caregiver
             </button>
           </div>
-
           <form onSubmit={submit} className="mt-6 space-y-4">
-
             <div>
-              <label className="mb-2 block text-sm font-bold">
-                Email
-              </label>
-
+              <label className="mb-2 block text-sm font-bold">Email</label>
               <input
                 className="input"
                 value={email}
@@ -92,12 +81,10 @@ export default function Login() {
                 required
               />
             </div>
-
             <div>
               <label className="mb-2 block text-sm font-bold">
                 Password
               </label>
-
               <input
                 className="input"
                 value={password}
@@ -107,18 +94,16 @@ export default function Login() {
                 required
               />
             </div>
-
-            <Button type="submit" className="w-full">
-              Continue as {role === 'user' ? 'User' : 'Caregiver'}
+            {error && <p className="text-sm text-red-500">{error}</p>}
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading
+                ? 'Logging in...'
+                : `Continue as ${role === 'user' ? 'User' : 'Caregiver'}`}
             </Button>
           </form>
-
           <p className="mt-6 text-center text-sm text-slate-500">
             New here?{' '}
-            <Link
-              className="font-bold text-[#2f8f92]"
-              to="/register"
-            >
+            <Link className="font-bold text-[#2f8f92]" to="/register">
               Create an account
             </Link>
           </p>
