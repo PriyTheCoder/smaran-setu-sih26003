@@ -44,7 +44,7 @@ export function AuthProvider({ children }) {
   }, [token])
 
   const signup = async (selectedRole, email, password) => {
-    const response = await fetch('http://localhost:8080/api/auth/signup', {
+   const response = await fetch('https://smaransetu-backend-sih26003.onrender.com/api/auth/signup',{
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -71,7 +71,7 @@ export function AuthProvider({ children }) {
   }
 
   const login = async (selectedRole, email, password) => {
-    const response = await fetch('http://localhost:8080/api/auth/login', {
+   const response = await fetch('https://smaransetu-backend-sih26003.onrender.com/api/auth/login',{
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
