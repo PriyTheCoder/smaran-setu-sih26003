@@ -13,16 +13,16 @@ export default function Register() {
 
   const { login } = useAuth()
   const navigate = useNavigate()
+const submit = (e) => {
+  e.preventDefault()
 
-  const submit = (event) => {
-    event.preventDefault()
+  // New registration = start profile setup from the beginning
+  localStorage.removeItem(`smaran_profile_${role}`)
 
-    login(role)
+  login(role)
 
-    navigate('/setup-profile', {
-      replace: true,
-    })
-  }
+  navigate('/setup-profile', { replace: true })
+}
 
   return (
     <main className="min-h-screen bg-[#f7f8f5] px-4 py-10 dark:bg-slate-950">

@@ -20,24 +20,11 @@ export default function BasicDetails() {
     gender: '',
     mobile: '',
   })
-
-  useEffect(() => {
-  // If user is not logged in, go to login
+useEffect(() => {
   if (!role) {
     navigate('/login', { replace: true })
-    return
   }
-
-  // If profile already exists, this is NOT signup anymore.
-  // Send the user directly to their dashboard.
-  if (profile) {
-    if (role === 'user') {
-      navigate('/user/home', { replace: true })
-    } else {
-      navigate('/caregiver/dashboard', { replace: true })
-    }
-  }
-}, [role, profile, navigate])
+}, [role, navigate])
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -66,12 +53,11 @@ export default function BasicDetails() {
       age: Number(form.age),
       updatedAt: Date.now(),
     })
-
-    if (role === 'user') {
-      navigate('/user/home', { replace: true })
-    } else {
-      navigate('/caregiver/dashboard', { replace: true })
-    }
+if (role === 'user') {
+  navigate('/initial-assessment')
+} else {
+  navigate('/caregiver/dashboard')
+}
   }
 
   return (
