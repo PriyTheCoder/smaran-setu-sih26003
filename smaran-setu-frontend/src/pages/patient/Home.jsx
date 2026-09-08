@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+
 import {
   CalendarDays,
   Gamepad2,
@@ -13,7 +14,7 @@ import {
 
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import VoiceButton from '../../components/patient/VoiceButton'
+import SmaranChatbot from '../../components/patient/SmaranChatbot'
 
 const actions = [
   {
@@ -52,7 +53,7 @@ const actions = [
 
 export default function Home() {
   const { profile } = useAuth()
-
+  const [showSmaranChat, setShowSmaranChat] = useState(false)
   const [activity, setActivity] = useState({
     completed: 0,
     total: 0,
@@ -428,12 +429,22 @@ export default function Home() {
       {/* =====================================================
           VOICE HELP
       ===================================================== */}
+<div className="flex justify-center pb-3">
+  <button
+    type="button"
+    onClick={() => setShowSmaranChat(true)}
+    className="flex items-center gap-3 rounded-2xl bg-[#2f8f92] px-6 py-4 font-bold text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#267a7d] hover:shadow-lg"
+  >
+    <Volume2 size={20} />
+    <span>Need help? Talk to Smaran</span>
+  </button>
+</div>
 
-      <div className="flex justify-center pb-3">
-
-        <VoiceButton text="Need help? Talk to Smaran" />
-
-      </div>
+      {showSmaranChat && (
+  <SmaranChatbot
+    onClose={() => setShowSmaranChat(false)}
+  />
+)}
 
     </div>
   )
