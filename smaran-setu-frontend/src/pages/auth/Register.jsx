@@ -12,20 +12,16 @@ export default function Register() {
   const [loading, setLoading] = useState(false)
   const { signup } = useAuth()
   const navigate = useNavigate()
+const submit = (e) => {
+  e.preventDefault()
 
-  const submit = async (event) => {
-    event.preventDefault()
-    setError('')
-    setLoading(true)
-    try {
-      await signup(role, email, password)
-      navigate('/setup-profile', { replace: true })
-    } catch (err) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
-    }
-  }
+  // New registration = start profile setup from the beginning
+  localStorage.removeItem(`smaran_profile_${role}`)
+
+  login(role)
+
+  navigate('/setup-profile', { replace: true })
+}
 
   return (
     <main className="min-h-screen bg-[#f7f8f5] px-4 py-10 dark:bg-slate-950">

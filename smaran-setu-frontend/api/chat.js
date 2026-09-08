@@ -17,7 +17,7 @@ Your main purpose is to help elderly users with:
 - Finding or remembering things
 - Basic wellbeing guidance
 
-IMPORTANT COMMUNICATION RULES:
+COMMUNICATION RULES:
 1. Understand Hindi, Hinglish and English.
 2. Reply in the same language style the user uses.
 3. Use very simple words.
@@ -36,29 +36,9 @@ MEDICAL SAFETY:
 6. For serious symptoms, advise the user to contact their caregiver
    or emergency medical services immediately.
 
-EMERGENCY:
-If the user describes symptoms such as:
-- severe chest pain
-- difficulty breathing
-- unconsciousness
-- serious injury
-- severe bleeding
-- stroke-like symptoms
-- a serious fall
-- any situation that sounds immediately dangerous
-
-respond calmly and clearly:
-- Tell them to get immediate medical help.
-- Tell them to contact their caregiver/family member.
-- Do not attempt to diagnose the condition.
-
 MEMORY SUPPORT:
 If the user says they forgot something, do not make up the missing information.
 Instead, help them remember using simple step-by-step questions.
-
-For example:
-User: "Mujhe yaad nahi mera phone kahan hai."
-You can suggest checking common places one by one.
 
 IMPORTANT:
 Never claim that you remember information unless that information
@@ -81,6 +61,14 @@ export default async function handler(req, res) {
     if (!message || !message.trim()) {
       return res.status(400).json({
         error: 'Message is required',
+      })
+    }
+
+    if (!process.env.GEMINI_API_KEY) {
+      console.error('GEMINI_API_KEY is missing')
+
+      return res.status(500).json({
+        error: 'Gemini API key is not configured',
       })
     }
 
@@ -108,7 +96,7 @@ export default async function handler(req, res) {
     ]
 
     const response = await ai.models.generateContent({
-      model: 'gemini-3.8-flash',
+      model: 'gemini-2.5-flash',
       contents,
       config: {
         systemInstruction: SMARAN_SYSTEM_PROMPT,
@@ -129,6 +117,7 @@ export default async function handler(req, res) {
 
     return res.status(500).json({
       error: 'Gemini request failed',
+      details: error?.message || 'Unknown error',
     })
   }
 }
