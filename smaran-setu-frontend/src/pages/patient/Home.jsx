@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useLanguage } from "../../context/LanguageContext";
 
 import {
   CalendarDays,
@@ -20,38 +21,39 @@ const actions = [
   {
     to: '/user/games',
     Icon: Gamepad2,
-    title: 'Play Games',
-    note: 'Fun activities for your memory',
+    titleKey: 'playGames',
+    noteKey: 'memoryActivities',
     color: 'bg-[#e8f4f2]',
     iconColor: 'text-[#2f8f92]',
   },
   {
     to: '/user/memories',
     Icon: Heart,
-    title: 'My Memories',
-    note: 'People and moments I love',
+    titleKey: 'myMemories',
+    noteKey: 'peopleMoments',
     color: 'bg-[#f0ebfa]',
     iconColor: 'text-[#7656bd]',
   },
   {
     to: '/user/routine',
     Icon: CalendarDays,
-    title: 'My Routine',
-    note: 'See what comes next',
+    titleKey: 'myRoutine',
+    noteKey: 'seeNext',
     color: 'bg-[#fff4df]',
     iconColor: 'text-[#d28a2d]',
   },
   {
     to: '/user/progress',
     Icon: BarChart3,
-    title: 'My Progress',
-    note: 'See how I am doing',
+    titleKey: 'myProgress',
+    noteKey: 'seeDoing',
     color: 'bg-[#e9f0fa]',
     iconColor: 'text-[#17345f]',
   },
 ]
 
 export default function Home() {
+   const { t } = useLanguage();
   const { profile } = useAuth()
   const [showSmaranChat, setShowSmaranChat] = useState(false)
   const [activity, setActivity] = useState({
@@ -150,33 +152,29 @@ export default function Home() {
 
             <div className="flex items-center gap-2">
               <span className="text-base font-semibold text-white/90">
-                Good morning
+               {t("welcomeSmaran")}
               </span>
 
               <span className="text-xl">❤️</span>
             </div>
-
-           <h1 className="mt-2 text-3xl font-black tracking-tight text-white sm:text-4xl">
-         Hello, {patientName}! 👋
-          </h1>
+<h1>
+  {t("hello")}, {patientName}! 👋
+</h1>
 
             <p className="mt-3 max-w-xl text-base leading-7 text-white/90 sm:text-lg">
-              Welcome back to your personal space.
-              Let&apos;s make today a happy and active day.
+             {t("welcomeBack")}
+{t("happyActive")}
             </p>
 
             {/* Small wellness badge */}
             <div className="mt-6 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur-sm">
               <Sparkles size={17} />
-              <span>You&apos;re doing great today!</span>
+              <span>{t("doingGreat")}</span>
             </div>
 
           </div>
 
-          {/* Voice button */}
-          <div className="hidden rounded-2xl bg-white/10 p-4 backdrop-blur-sm sm:block">
-            <Volume2 size={30} />
-          </div>
+         
 
         </div>
       </section>
@@ -199,16 +197,16 @@ export default function Home() {
               />
 
               <p className="text-sm font-bold uppercase tracking-wide text-[#2f8f92]">
-                Today&apos;s wellness
+               {t("todaysWellness")}
               </p>
             </div>
 
             <h2 className="mt-2 text-2xl font-black text-[#17345f]">
-              Keep your mind active 🌱
+             {t("keepMindActive")} 🌱
             </h2>
 
             <p className="mt-2 max-w-xl text-slate-500">
-              A few simple activities can make your day more enjoyable.
+             {t("simpleActivities")}
             </p>
 
           </div>
@@ -230,7 +228,7 @@ export default function Home() {
               </p>
 
               <p className="text-sm text-slate-500">
-                activities done
+               {t("activitiesDone")}
               </p>
             </div>
 
@@ -243,15 +241,15 @@ export default function Home() {
 
           <div className="mb-2 flex justify-between text-xs font-bold">
             <span className="text-slate-500">
-              Daily goal
+              {t("dailyGoal")}
             </span>
 
                       <span className="text-[#2f8f92]">
             {activity.percentage >= 80
-              ? 'Excellent!'
-              : activity.percentage >= 50
-                ? 'Almost there!'
-                : 'Keep going gently!'}
+  ? t("excellent")
+  : activity.percentage >= 50
+    ? t("almostThere")
+    : t("keepGoing")}
           </span>
           </div>
 
@@ -296,8 +294,8 @@ export default function Home() {
 
         <div className="grid gap-4 sm:grid-cols-2">
 
-          {actions.map(
-            ({ to, Icon, title, note, color, iconColor }) => (
+         {actions.map(
+  ({ to, Icon, titleKey, noteKey, color, iconColor }) => (
 
               <Link
                 key={to}
@@ -319,13 +317,13 @@ export default function Home() {
                 {/* Text */}
                 <div className="min-w-0">
 
-                  <h3 className="text-xl font-black text-[#17345f]">
-                    {title}
-                  </h3>
+                 <h3 className="text-xl font-black text-[#17345f]">
+  {t(titleKey)}
+</h3>
 
-                  <p className="mt-1 text-base leading-6 text-slate-500">
-                    {note}
-                  </p>
+                 <p className="mt-1 text-base leading-6 text-slate-500">
+  {t(noteKey)}
+</p>
 
                   <span className="mt-3 inline-block text-sm font-bold text-[#2f8f92]">
                     Open →
@@ -344,7 +342,7 @@ export default function Home() {
 
             )
           )}
-
+      
         </div>
 
       </section>
@@ -368,15 +366,15 @@ export default function Home() {
           <div className="flex-1">
 
             <p className="text-sm font-bold uppercase tracking-wide text-[#2f8f92]">
-              Next activity
+              {t("nextActivity")}
             </p>
 
             <h3 className="mt-1 text-xl font-black text-[#17345f]">
-              Memory Match 🎮
+              {t("memoryMatch")} 🎮
             </h3>
 
             <p className="mt-1 text-sm leading-6 text-slate-500">
-              A short and fun activity to exercise your memory.
+             {t("memoryExercise")}
             </p>
 
           </div>
@@ -387,7 +385,7 @@ export default function Home() {
             to="/user/games"
             className="btn-secondary shrink-0"
           >
-            Start Activity
+           {t("startActivity")}
             <ArrowRight size={18} />
           </Link>
 
@@ -411,12 +409,11 @@ export default function Home() {
           <div>
 
             <h3 className="text-lg font-black text-[#17345f]">
-              Every little step matters
+             {t("everyStep")}
             </h3>
 
             <p className="mt-1 max-w-2xl text-sm leading-6 text-slate-600">
-              Take your time, enjoy your activities, and keep making
-              beautiful moments every day.
+             {t("takeYourTime")}
             </p>
 
           </div>
@@ -436,7 +433,7 @@ export default function Home() {
     className="flex items-center gap-3 rounded-2xl bg-[#2f8f92] px-6 py-4 font-bold text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#267a7d] hover:shadow-lg"
   >
     <Volume2 size={20} />
-    <span>Need help? Talk to Smaran</span>
+    <span>{t("needHelp")}</span>
   </button>
 </div>
 
