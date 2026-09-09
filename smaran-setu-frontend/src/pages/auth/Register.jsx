@@ -1,3 +1,4 @@
+```jsx
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import Logo from '../../components/common/Logo'
@@ -10,30 +11,51 @@ export default function Register() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+
   const { signup } = useAuth()
   const navigate = useNavigate()
-const submit = (e) => {
-  e.preventDefault()
 
-  // New registration = start profile setup from the beginning
-  localStorage.removeItem(`smaran_profile_${role}`)
+  const submit = async (e) => {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
 
-  login(role)
+    try {
+      // Create account using the Spring Boot backend
+      await signup(email, password, role)
 
-  navigate('/setup-profile', { replace: true })
-}
+      // Start profile setup from the beginning
+      localStorage.removeItem(`smaran_profile_${role}`)
+
+      // Go to profile setup after successful registration
+      navigate('/setup-profile', { replace: true })
+    } catch (err) {
+      console.error('Registration failed:', err)
+
+      setError(
+        err?.response?.data?.message ||
+        err?.message ||
+        'Registration failed. Please try again.'
+      )
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <main className="min-h-screen bg-[#f7f8f5] px-4 py-10 dark:bg-slate-950">
       <div className="mx-auto max-w-md">
         <Logo />
+
         <div className="card mt-8 p-7">
           <h1 className="text-2xl font-bold text-[#17345f] dark:text-white">
             Create your account
           </h1>
+
           <p className="mt-2 text-slate-500 dark:text-slate-300">
             Start your personalized Smaran Setu journey.
           </p>
+
           <div className="mt-6 grid grid-cols-2 gap-3">
             <button
               type="button"
@@ -49,6 +71,7 @@ const submit = (e) => {
                 For the elderly user
               </span>
             </button>
+
             <button
               type="button"
               onClick={() => setRole('caregiver')}
@@ -64,6 +87,7 @@ const submit = (e) => {
               </span>
             </button>
           </div>
+
           <form className="mt-6 space-y-4" onSubmit={submit}>
             <input
               className="input"
@@ -73,6 +97,7 @@ const submit = (e) => {
               onChange={(event) => setEmail(event.target.value)}
               required
             />
+
             <input
               className="input"
               placeholder="Create password"
@@ -81,16 +106,30 @@ const submit = (e) => {
               onChange={(event) => setPassword(event.target.value)}
               required
             />
+
             {error && (
-              <p className="text-sm text-red-500">{error}</p>
+              <p className="text-sm text-red-500">
+                {error}
+              </p>
             )}
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Creating account...' : 'Continue to profile →'}
+
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={loading}
+            >
+              {loading
+                ? 'Creating account...'
+                : 'Continue to profile →'}
             </Button>
           </form>
+
           <p className="mt-6 text-center text-sm text-slate-500">
             Already have an account?{' '}
-            <Link className="font-bold text-[#2f8f92]" to="/login">
+            <Link
+              className="font-bold text-[#2f8f92]"
+              to="/login"
+            >
               Login
             </Link>
           </p>
@@ -99,3 +138,4 @@ const submit = (e) => {
     </main>
   )
 }
+```
