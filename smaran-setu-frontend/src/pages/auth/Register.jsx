@@ -1,14 +1,14 @@
-```jsx
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+
 import Logo from '../../components/common/Logo'
 import Button from '../../components/common/Button'
 import { useAuth } from '../../context/AuthContext'
 
 export default function Register() {
-  const [role, setRole] = useState('user')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [role, setRole] = useState('user')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -21,22 +21,14 @@ export default function Register() {
     setLoading(true)
 
     try {
-      // Create the account in the Spring Boot backend
-      await signup(email, password, role)
+      await signup(role, email, password)
 
-      // Clear any old profile data for this role
       localStorage.removeItem(`smaran_profile_${role}`)
 
-      // Continue to profile setup
       navigate('/setup-profile', { replace: true })
     } catch (err) {
-      console.error('Registration failed:', err)
-
-      setError(
-        err?.response?.data?.message ||
-        err?.message ||
-        'Registration failed. Please try again.'
-      )
+      console.error('Signup error:', err)
+      setError(err.message || 'Signup failed. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -67,7 +59,8 @@ export default function Register() {
               }`}
             >
               <b>User</b>
-              <span className="mt-1 block text-sm text-slate-500">
+
+              <span className="mt-1 block text-sm text-slate-500 dark:text-slate-400">
                 For the elderly user
               </span>
             </button>
@@ -82,13 +75,17 @@ export default function Register() {
               }`}
             >
               <b>Caregiver</b>
-              <span className="mt-1 block text-sm text-slate-500">
+
+              <span className="mt-1 block text-sm text-slate-500 dark:text-slate-400">
                 For family or helper
               </span>
             </button>
           </div>
 
-          <form className="mt-6 space-y-4" onSubmit={submit}>
+          <form
+            className="mt-6 space-y-4"
+            onSubmit={submit}
+          >
             <input
               className="input"
               placeholder="Email"
@@ -126,6 +123,7 @@ export default function Register() {
 
           <p className="mt-6 text-center text-sm text-slate-500">
             Already have an account?{' '}
+
             <Link
               className="font-bold text-[#2f8f92]"
               to="/login"
@@ -138,4 +136,3 @@ export default function Register() {
     </main>
   )
 }
-```
