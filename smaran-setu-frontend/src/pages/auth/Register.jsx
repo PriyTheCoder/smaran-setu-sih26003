@@ -21,13 +21,13 @@ export default function Register() {
     setLoading(true)
 
     try {
-      // Create account using the Spring Boot backend
+      // Create the account in the Spring Boot backend
       await signup(email, password, role)
 
-      // Start profile setup from the beginning
+      // Clear any old profile data for this role
       localStorage.removeItem(`smaran_profile_${role}`)
 
-      // Go to profile setup after successful registration
+      // Continue to profile setup
       navigate('/setup-profile', { replace: true })
     } catch (err) {
       console.error('Registration failed:', err)
