@@ -363,13 +363,15 @@ const startListening = () => {
   setIsTyping(true)
 
   try {
-    const response = await fetch('/api/chat', {
+    const response = await fetch('http://127.0.0.1:8000/api/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        patient_id: 'test_002',
         message: userMessage,
+        asked_by: 'patient',
       }),
     })
 
