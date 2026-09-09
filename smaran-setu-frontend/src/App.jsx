@@ -1,3 +1,5 @@
+import UserMemories from './pages/patient/Memories'
+import UserAddMemory from './pages/patient/AddMemory'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Welcome from './pages/auth/Welcome'
 import Login from './pages/auth/Login'
@@ -45,8 +47,9 @@ export default function App() {
           <Route path="games" element={<Games />} />
           <Route path="games/:gameId" element={<GamePlay />} />
           <Route path="result" element={<GameResult />} />
-          <Route path="memories" element={<Memories />} />
+          <Route path="memories" element={<UserMemories />} />
           <Route path="memories/:memoryId" element={<MemoryDetails />} />
+          <Route path="memories/add" element={<UserAddMemory />} />
           <Route path="routine" element={<Routine />} />
           <Route path="progress" element={<Progress />} />
           <Route path="profile" element={<Profile />} />
