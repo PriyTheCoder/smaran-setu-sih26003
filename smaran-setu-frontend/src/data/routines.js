@@ -5,7 +5,7 @@ export const routines = [
     note: 'Start the day gently',
     icon: '🌞',
     color: 'orange',
-    done: true,
+    done: false,
   },
 
   {

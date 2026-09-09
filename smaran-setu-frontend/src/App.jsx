@@ -28,6 +28,7 @@ import Alerts from './pages/caregiver/Alerts'
 import Reports from './pages/caregiver/Reports'
 import Settings from './pages/caregiver/Settings'
 import ProtectedRoute from './components/common/ProtectedRoute'
+import InitialAssessment from './pages/auth/InitialAssessment'
 
 export default function App() {
   return (
@@ -37,6 +38,11 @@ export default function App() {
      <Route path="/register" element={<Register />} />
 
 <Route path="/setup-profile" element={<BasicDetails />} />
+
+ <Route
+  path="/initial-assessment"
+  element={<InitialAssessment />}
+/>
 
 <Route path="/role-selection" element={<RoleSelection />} />
 
@@ -73,6 +79,7 @@ export default function App() {
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />
+     
     </Routes>
   )
 }

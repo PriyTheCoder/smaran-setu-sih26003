@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+
 import {
   CalendarDays,
   Gamepad2,
@@ -12,7 +14,7 @@ import {
 
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import VoiceButton from '../../components/patient/VoiceButton'
+import SmaranChatbot from '../../components/patient/SmaranChatbot'
 
 const actions = [
   {
@@ -51,8 +53,83 @@ const actions = [
 
 export default function Home() {
   const { profile } = useAuth()
+  const [showSmaranChat, setShowSmaranChat] = useState(false)
+  const [activity, setActivity] = useState({
+    completed: 0,
+    total: 0,
+    percentage: 0,
+  })
 
-  const userName = profile?.name || 'Friend'
+  const refreshActivity = () => {
+    try {
+      const savedRoutines = JSON.parse(
+        localStorage.getItem('dailyRoutines') || '[]'
+      )
+
+      const savedGames = JSON.parse(
+        localStorage.getItem('gameResults') || '[]'
+      )
+
+      // Completed routines
+      const completedRoutines = savedRoutines.filter(
+        (item) => item.done
+      ).length
+
+      const totalRoutines = savedRoutines.length
+
+      // Count unique games played today
+      const today = new Date().toLocaleDateString()
+
+      const todayGames = savedGames.filter(
+        (game) => game.date === today
+      )
+
+      const completedGames = new Set(
+        todayGames.map((game) => game.gameId)
+      ).size
+
+      // There are currently 4 games in the app
+      const totalGames = 4
+
+      const completed = completedRoutines + completedGames
+      const total = totalRoutines + totalGames
+
+      const percentage =
+        total > 0
+          ? Math.round((completed / total) * 100)
+          : 0
+
+      setActivity({
+        completed,
+        total,
+        percentage,
+      })
+    } catch (error) {
+      console.error('Unable to calculate activity:', error)
+    }
+  }
+
+  useEffect(() => {
+    refreshActivity()
+
+    const handleActivityUpdate = () => {
+      refreshActivity()
+    }
+
+    window.addEventListener(
+      'smaran-activity-updated',
+      handleActivityUpdate
+    )
+
+    return () => {
+      window.removeEventListener(
+        'smaran-activity-updated',
+        handleActivityUpdate
+      )
+    }
+  }, [])
+
+  const patientName = profile?.name || 'there'
 
   return (
     <div className="space-y-7">
@@ -80,7 +157,7 @@ export default function Home() {
             </div>
 
            <h1 className="mt-2 text-3xl font-black tracking-tight text-white sm:text-4xl">
-          Hello, {userName}! 👋
+         Hello, {patientName}! 👋
           </h1>
 
             <p className="mt-3 max-w-xl text-base leading-7 text-white/90 sm:text-lg">
@@ -141,15 +218,15 @@ export default function Home() {
 
             <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-[#e8f4f2]">
 
-              <div className="text-xl font-black text-[#2f8f92]">
-                66%
-              </div>
+                            <div className="text-xl font-black text-[#2f8f92]">
+                           {activity.percentage}%
+                            </div>
 
             </div>
 
             <div>
               <p className="font-bold text-[#17345f]">
-                2 of 3
+            {activity.completed} of {activity.total}
               </p>
 
               <p className="text-sm text-slate-500">
@@ -169,14 +246,23 @@ export default function Home() {
               Daily goal
             </span>
 
-            <span className="text-[#2f8f92]">
-              Almost there!
-            </span>
+                      <span className="text-[#2f8f92]">
+            {activity.percentage >= 80
+              ? 'Excellent!'
+              : activity.percentage >= 50
+                ? 'Almost there!'
+                : 'Keep going gently!'}
+          </span>
           </div>
 
           <div className="h-3 overflow-hidden rounded-full bg-slate-100">
 
-            <div className="h-full w-2/3 rounded-full bg-[#2f8f92] transition-all duration-500" />
+            <div
+          className="h-full rounded-full bg-[#2f8f92] transition-all duration-500"
+          style={{
+            width: `${activity.percentage}%`,
+          }}
+/>
 
           </div>
 
@@ -343,12 +429,22 @@ export default function Home() {
       {/* =====================================================
           VOICE HELP
       ===================================================== */}
+<div className="flex justify-center pb-3">
+  <button
+    type="button"
+    onClick={() => setShowSmaranChat(true)}
+    className="flex items-center gap-3 rounded-2xl bg-[#2f8f92] px-6 py-4 font-bold text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#267a7d] hover:shadow-lg"
+  >
+    <Volume2 size={20} />
+    <span>Need help? Talk to Smaran</span>
+  </button>
+</div>
 
-      <div className="flex justify-center pb-3">
-
-        <VoiceButton text="Need help? Talk to Smaran" />
-
-      </div>
+      {showSmaranChat && (
+  <SmaranChatbot
+    onClose={() => setShowSmaranChat(false)}
+  />
+)}
 
     </div>
   )

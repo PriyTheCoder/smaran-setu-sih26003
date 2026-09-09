@@ -20,22 +20,11 @@ export default function BasicDetails() {
     gender: '',
     mobile: '',
   })
-
-  useEffect(() => {
-    if (!role) {
-      navigate('/login', { replace: true })
-      return
-    }
-
-    if (profile) {
-      setForm({
-        name: profile.name || '',
-        age: profile.age || '',
-        gender: profile.gender || '',
-        mobile: profile.mobile || '',
-      })
-    }
-  }, [role, profile, navigate])
+useEffect(() => {
+  if (!role) {
+    navigate('/login', { replace: true })
+  }
+}, [role, navigate])
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -64,12 +53,11 @@ export default function BasicDetails() {
       age: Number(form.age),
       updatedAt: Date.now(),
     })
-
-    if (role === 'user') {
-      navigate('/user/home', { replace: true })
-    } else {
-      navigate('/caregiver/dashboard', { replace: true })
-    }
+if (role === 'user') {
+  navigate('/initial-assessment')
+} else {
+  navigate('/caregiver/dashboard')
+}
   }
 
   return (

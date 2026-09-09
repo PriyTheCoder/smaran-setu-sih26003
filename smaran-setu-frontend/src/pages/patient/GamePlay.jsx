@@ -2345,6 +2345,16 @@ function PictureRecall({
           questions.length) *
           100
       )
+    localStorage.setItem(
+      'gameResults',
+      JSON.stringify([
+        ...previousResults,
+        result,
+      ])
+    )
+    window.dispatchEvent(
+  new Event('smaran-activity-updated')
+)
 
     const nextLevel =
       updatePlayerLevel(

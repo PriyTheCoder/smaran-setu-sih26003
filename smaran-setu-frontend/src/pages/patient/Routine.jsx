@@ -26,6 +26,10 @@ useEffect(() => {
     'dailyRoutines',
     JSON.stringify(routineList)
   )
+
+  window.dispatchEvent(
+    new Event('smaran-activity-updated')
+  )
 }, [routineList])
 
   const completedCount = routineList.filter(
