@@ -49,7 +49,7 @@ export default function Activities() {
 
           <ActivitySummary
             icon={Hash}
-            title="Number Sequence"
+            title="Pattern Recognition"
             type="number"
             results={results}
           />
