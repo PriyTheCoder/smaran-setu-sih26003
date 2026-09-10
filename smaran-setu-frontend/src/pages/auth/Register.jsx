@@ -17,6 +17,7 @@ export default function Register() {
 
   const submit = async (e) => {
     e.preventDefault()
+
     setError('')
     setLoading(true)
 
@@ -28,7 +29,10 @@ export default function Register() {
       navigate('/setup-profile', { replace: true })
     } catch (err) {
       console.error('Signup error:', err)
-      setError(err.message || 'Signup failed. Please try again.')
+
+      setError(
+        err.message || 'Signup failed. Please try again.'
+      )
     } finally {
       setLoading(false)
     }
@@ -105,7 +109,7 @@ export default function Register() {
             />
 
             {error && (
-              <p className="text-sm text-red-500">
+              <p className="rounded-lg bg-red-50 p-3 text-sm text-red-600">
                 {error}
               </p>
             )}
