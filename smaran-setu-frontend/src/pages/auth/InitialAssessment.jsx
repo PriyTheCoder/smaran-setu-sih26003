@@ -1,8 +1,25 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import InitialAssessmentForm from '../../components/patient/InitialAssessment'
+import { useEffect } from 'react'
 
 export default function InitialAssessment() {
+
+  useEffect(() => {
+  if (!role) {
+    navigate('/login', { replace: true })
+    return
+  }
+
+  if (profile?.profileCompleted === true) {
+    navigate(
+      role === 'user'
+        ? '/user/home'
+        : '/caregiver/dashboard',
+      { replace: true }
+    )
+  }
+}, [role, profile, navigate])
   console.log("🔥 INITIAL ASSESSMENT PAGE LOADED")
   const navigate = useNavigate()
 
