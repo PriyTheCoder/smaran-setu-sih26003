@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthContext'
 import InitialAssessmentForm from '../../components/patient/InitialAssessment'
 
 export default function InitialAssessment() {
+  console.log("🔥 INITIAL ASSESSMENT PAGE LOADED")
   const navigate = useNavigate()
 
   const { role, profile, saveProfile } = useAuth()
