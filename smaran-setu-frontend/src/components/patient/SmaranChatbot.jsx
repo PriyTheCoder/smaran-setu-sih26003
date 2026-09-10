@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useAuth } from '../../context/AuthContext'
 import {
   X,
   Send,
@@ -248,6 +249,7 @@ function getSmaranResponse(message) {
 }
 
 export default function SmaranChatbot({ onClose }) {
+  const { profile, role } = useAuth()
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -362,18 +364,20 @@ const startListening = () => {
 
   setIsTyping(true)
 
-  try {
-    const response = await fetch('http://127.0.0.1:8000/api/chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        patient_id: 'test_002',
-        message: userMessage,
-        asked_by: 'patient',
-      }),
-    })
+const response = await fetch(
+  'https://smaransetuaibknd.onrender.com/api/chat',
+  {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      patient_id: profile?.userId,
+      message: userMessage,
+      asked_by: role === 'caregiver' ? 'caregiver' : 'patient',
+    }),
+  }
+)
 
     const data = await response.json()
 
