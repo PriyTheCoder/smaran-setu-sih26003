@@ -24,8 +24,18 @@ export default function BasicDetails() {
 useEffect(() => {
   if (!role) {
     navigate('/login', { replace: true })
+    return
   }
-}, [role, navigate])
+
+  if (profile?.profileCompleted === true) {
+    navigate(
+      role === 'user'
+        ? '/user/home'
+        : '/caregiver/dashboard',
+      { replace: true }
+    )
+  }
+}, [role, profile, navigate])
 
   const handleChange = (event) => {
     const { name, value } = event.target
