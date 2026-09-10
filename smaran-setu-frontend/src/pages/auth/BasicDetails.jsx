@@ -13,6 +13,7 @@ export default function BasicDetails() {
     profile,
     saveProfile,
   } = useAuth()
+  console.log('🔥 BASIC DETAILS PROFILE:', profile)
 
   const [form, setForm] = useState({
     name: '',
