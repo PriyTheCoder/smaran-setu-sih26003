@@ -12,27 +12,60 @@ export default function Login() {
   const [loading, setLoading] = useState(false)
   const { login } = useAuth()
   const navigate = useNavigate()
+const submit = async (event) => {
+  event.preventDefault()
+  setError('')
+  setLoading(true)
 
-  const submit = async (event) => {
-    event.preventDefault()
-    setError('')
-    setLoading(true)
-    try {
-      const data = await login(role, email, password)
+  try {
+    const data = await login(role, email, password)
 
-      if (data.profileCompleted) {
-        navigate(role === 'user' ? '/user/home' : '/caregiver/dashboard', {
-          replace: true,
-        })
-      } else {
-        navigate('/setup-profile', { replace: true })
-      }
-    } catch (err) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
+    // Existing user → directly go to dashboard/home
+    if (data.profileCompleted === true) {
+      navigate(
+        role === 'user'
+          ? '/user/home'
+          : '/caregiver/dashboard',
+        { replace: true }
+      )
+      return
     }
+
+    // Fallback:
+    // If backend doesn't correctly send profileCompleted,
+    // check whether this user's profile already exists locally.
+    const savedProfile = localStorage.getItem(
+      `smaran_profile_${role}`
+    )
+
+    if (savedProfile) {
+      const profile = JSON.parse(savedProfile)
+
+      if (
+        profile?.name &&
+        profile?.age &&
+        profile?.gender &&
+        profile?.mobile
+      ) {
+        navigate(
+          role === 'user'
+            ? '/user/home'
+            : '/caregiver/dashboard',
+          { replace: true }
+        )
+        return
+      }
+    }
+
+    // New user → onboarding
+    navigate('/setup-profile', { replace: true })
+
+  } catch (err) {
+    setError(err.message)
+  } finally {
+    setLoading(false)
   }
+}
 
   return (
     <main className="min-h-screen bg-[#f7f8f5] px-4 py-10 dark:bg-slate-950">
