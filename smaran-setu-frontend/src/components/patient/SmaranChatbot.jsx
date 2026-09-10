@@ -372,7 +372,7 @@ const response = await fetch(
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      patient_id: profile?.userId,
+      patient_id:String(profile?.userId),
       message: userMessage,
       asked_by: role === 'caregiver' ? 'caregiver' : 'patient',
     }),
