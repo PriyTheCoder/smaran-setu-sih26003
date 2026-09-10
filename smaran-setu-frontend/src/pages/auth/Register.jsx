@@ -44,11 +44,11 @@ export default function Register() {
         <Logo />
 
         <div className="card mt-8 p-7">
-          <h1 className="text-2xl font-bold text-[#17345f] dark:text-white">
+          <h1 className="text-2xl font-bold text-[#17345f] dark:text-black">
             Create your account
           </h1>
 
-          <p className="mt-2 text-slate-500 dark:text-slate-300">
+          <p className="mt-2 text-slate-500 dark:text-black">
             Start your personalized Smaran Setu journey.
           </p>
 

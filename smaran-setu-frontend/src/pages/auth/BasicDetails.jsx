@@ -78,15 +78,15 @@ if (role === 'user') {
 
         <div className="card mt-8 p-7 sm:p-9">
           <div className="mb-8">
-            <p className="text-sm font-bold uppercase tracking-wide text-[#2f8f92]">
+            <p className="text-sm font-bold uppercase tracking-wide text-black">
               One-time setup
             </p>
 
-            <h1 className="mt-2 text-3xl font-black text-[#17345f] dark:text-white">
+            <h1 className="mt-2 text-3xl font-black text-[#17345f] dark:text-black">
               Tell us a little about you
             </h1>
 
-            <p className="mt-2 text-slate-500 dark:text-slate-300">
+            <p className="mt-2 text-slate-500 dark:text-black">
               These details help us personalize your Smaran Setu experience.
             </p>
           </div>
@@ -95,7 +95,7 @@ if (role === 'user') {
 
             {/* Name */}
             <div>
-              <label className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-700 dark:text-slate-200">
+              <label className="mb-2 flex items-center gap-2 text-sm font-bold text-black dark:text-black">
                 <User size={17} />
                 Full Name
               </label>
@@ -112,7 +112,7 @@ if (role === 'user') {
 
             {/* Age */}
             <div>
-              <label className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-700 dark:text-slate-200">
+              <label className="mb-2 flex items-center gap-2 text-sm font-bold text-black dark:text-black">
                 <Calendar size={17} />
                 Age
               </label>
@@ -132,7 +132,7 @@ if (role === 'user') {
 
             {/* Gender */}
             <div>
-              <label className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-700 dark:text-slate-200">
+              <label className="mb-2 flex items-center gap-2 text-sm font-bold text-black dark:text-black">
                 <Users size={17} />
                 Gender
               </label>
@@ -156,7 +156,7 @@ if (role === 'user') {
 
             {/* Mobile */}
             <div>
-              <label className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-700 dark:text-slate-200">
+              <label className="mb-2 flex items-center gap-2 text-sm font-bold text-black dark:text-black">
                 <Phone size={17} />
                 Mobile Number
               </label>

@@ -241,12 +241,12 @@ export default function Progress() {
                       {item.game}
                     </p>
 
-                    <p className="mt-1 text-xs font-semibold text-slate-400">
+                    <p className="mt-1 text-xs font-semibold text-black-200">
                       {item.date}
                     </p>
                   </div>
 
-                  <div className="rounded-xl bg-white px-4 py-2 font-black text-[#2f8f92] shadow-sm">
+                  <div className="rounded-xl bg-white px-4 py-2 font-black text-blue shadow-sm">
                     {item.score}%
                   </div>
                 </div>
@@ -282,11 +282,11 @@ function ProgressBar({ label, score }) {
   return (
     <div className="mb-6 last:mb-0">
       <div className="mb-2 flex items-center justify-between gap-3">
-        <span className="font-bold text-[#17345f]">
+        <span className="font-bold text-black">
           {label}
         </span>
 
-        <span className="font-bold text-[#2f8f92]">
+        <span className="font-bold text-blue">
           {score}%
         </span>
       </div>

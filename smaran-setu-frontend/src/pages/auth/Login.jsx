@@ -72,10 +72,10 @@ const submit = async (event) => {
       <div className="mx-auto max-w-md">
         <Logo />
         <div className="card mt-8 p-7">
-          <h1 className="text-2xl font-bold text-[#17345f] dark:text-white">
+          <h1 className="text-2xl font-bold text-[#17345f] dark:text-black">
             Welcome back
           </h1>
-          <p className="mt-2 text-slate-500 dark:text-slate-300">
+          <p className="mt-2 text-slate-500 dark:text-black">
             Choose your account type and continue.
           </p>
           <div className="mt-6 grid grid-cols-2 gap-2 rounded-2xl bg-slate-100 p-1 dark:bg-slate-800">
