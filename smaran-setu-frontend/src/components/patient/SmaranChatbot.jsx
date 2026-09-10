@@ -250,8 +250,6 @@ function getSmaranResponse(message) {
 
 export default function SmaranChatbot({ onClose }) {
   const { profile, role } = useAuth()
-  console.log('Smaran profile:', profile)
-  console.log('Smaran role:', role)
   const [messages, setMessages] = useState([
     {
       id: 1,
