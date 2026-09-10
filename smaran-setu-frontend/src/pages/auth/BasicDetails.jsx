@@ -49,10 +49,11 @@ useEffect(() => {
     }
 
     saveProfile({
-      ...form,
-      age: Number(form.age),
-      updatedAt: Date.now(),
-    })
+  ...(profile || {}),
+  ...form,
+  age: Number(form.age),
+  updatedAt: Date.now(),
+})
 if (role === 'user') {
   navigate('/initial-assessment')
 } else {
