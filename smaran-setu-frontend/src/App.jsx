@@ -29,9 +29,12 @@ import Reports from './pages/caregiver/Reports'
 import Settings from './pages/caregiver/Settings'
 import ProtectedRoute from './components/common/ProtectedRoute'
 import InitialAssessment from './pages/auth/InitialAssessment'
+import LanguageSelector from "./components/common/LanguageSelector";
 
 export default function App() {
   return (
+    <>
+      <LanguageSelector />
     <Routes>
       <Route path="/" element={<Welcome />} />
       <Route path="/login" element={<Login />} />
@@ -80,6 +83,8 @@ export default function App() {
 
       <Route path="*" element={<Navigate to="/" replace />} />
      
+     
     </Routes>
+    </>
   )
 }
