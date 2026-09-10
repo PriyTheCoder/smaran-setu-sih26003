@@ -48,6 +48,7 @@ useEffect(() => {
       alert('Please enter a valid age.')
       return
     }
+    console.log('🔥 BEFORE SAVING BASIC DETAILS:', profile)
 
     saveProfile({
   ...(profile || {}),
@@ -55,6 +56,14 @@ useEffect(() => {
   age: Number(form.age),
   updatedAt: Date.now(),
 })
+    
+    console.log('🔥 AFTER SAVING BASIC DETAILS:', {
+  ...(profile || {}),
+  ...form,
+  age: Number(form.age),
+  updatedAt: Date.now(),
+})
+    
 if (role === 'user') {
   navigate('/initial-assessment')
 } else {
