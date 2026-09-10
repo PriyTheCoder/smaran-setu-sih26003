@@ -285,19 +285,19 @@ export default function GameResult() {
 
           <div className="text-center">
 
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#e8f4f2] text-[#2f8f92]">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-200 text-[#2f8f92]">
               <GameIcon size={28} />
             </div>
 
-            <p className="mt-4 text-sm font-bold uppercase tracking-wide text-[#2f8f92]">
+            <p className="mt-4 text-sm font-bold uppercase tracking-wide text-blue">
               Activity completed
             </p>
 
-            <h2 className="mt-2 text-2xl font-black text-[#17345f] dark:text-white">
+            <h2 className="mt-2 text-2xl font-black text-blue dark:text-white">
               {game}
             </h2>
 
-            <p className="mt-2 text-sm text-slate-400">
+            <p className="mt-2 text-sm text-blue">
               Completed on {resultDate}
             </p>
 
@@ -314,7 +314,7 @@ export default function GameResult() {
 
               <div className="flex items-center gap-4">
 
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-[#2f8f92] shadow-sm">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-blue shadow-sm">
 
                   <Star
                     size={24}
@@ -325,11 +325,11 @@ export default function GameResult() {
 
                 <div className="text-left">
 
-                  <p className="text-xs font-bold uppercase tracking-wide text-slate-400">
+                  <p className="text-xs font-bold uppercase tracking-wide text-blue">
                     Current Level
                   </p>
 
-                  <p className="mt-1 text-xl font-black text-[#17345f] dark:text-white">
+                  <p className="mt-1 text-xl font-black text-[#17345f] dark:text-blue">
                     Level {level}
                   </p>
 
@@ -338,7 +338,7 @@ export default function GameResult() {
               </div>
 
 
-              <div className="rounded-full bg-[#e8f4f2] px-4 py-2 text-sm font-black text-[#2f8f92]">
+              <div className="rounded-full bg-[#e8f4f2] px-4 py-2 text-sm font-black text-blue">
                 {difficulty}
               </div>
 
@@ -351,11 +351,11 @@ export default function GameResult() {
 
               <div className="mb-2 flex items-center justify-between text-xs font-bold">
 
-                <span className="text-slate-400">
+                <span className="text-blue">
                   Difficulty progress
                 </span>
 
-                <span className="text-[#2f8f92]">
+                <span className="text-blue">
                   {level} / 5
                 </span>
 
@@ -400,11 +400,11 @@ export default function GameResult() {
 
               <div>
 
-                <h3 className="text-lg font-black text-[#17345f] dark:text-white">
+                <h3 className="text-lg font-black text-[#17345f] dark:text-blue">
                   {levelMessage.title}
                 </h3>
 
-                <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">
+                <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-blue">
                   {levelMessage.text}
                 </p>
 
@@ -421,7 +421,7 @@ export default function GameResult() {
 
           <div className="my-7 rounded-[28px] bg-gradient-to-br from-[#e8f4f2] to-[#f0ebfa] p-7 text-center sm:p-8">
 
-            <div className="flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-wide text-slate-500">
+            <div className="flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-wide text-blue">
 
               <Trophy
                 size={18}
@@ -435,14 +435,14 @@ export default function GameResult() {
 
             {/* Score */}
 
-            <p className="mt-3 text-6xl font-black tracking-tight text-[#17345f] sm:text-7xl">
+            <p className="mt-3 text-6xl font-black tracking-tight text-black sm:text-7xl">
               {score}%
             </p>
 
 
             {/* Score label */}
 
-            <div className="mt-2 inline-flex rounded-full bg-white px-4 py-1.5 text-sm font-black text-[#2f8f92] shadow-sm">
+            <div className="mt-2 inline-flex rounded-full bg-white px-4 py-1.5 text-sm font-black text-black shadow-sm">
               {resultLabel}
             </div>
 
@@ -472,11 +472,11 @@ export default function GameResult() {
 
             {/* Friendly message */}
 
-            <p className="mt-4 text-base font-bold text-[#2f8f92]">
+            <p className="mt-4 text-base font-bold text-blue">
               {message.title}
             </p>
 
-            <p className="mt-1 text-sm leading-6 text-slate-500">
+            <p className="mt-1 text-sm leading-6 text-black">
               {message.text}
             </p>
 
@@ -499,11 +499,11 @@ export default function GameResult() {
 
               <div>
 
-                <h3 className="text-lg font-black text-[#17345f] dark:text-white">
+                <h3 className="text-lg font-black text-[#17345f] dark:text-blue">
                   {gameDescription.title}
                 </h3>
 
-                <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">
+                <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-blue">
                   {gameDescription.text}
                 </p>
 
@@ -520,7 +520,7 @@ export default function GameResult() {
 
           <div className="mb-5 rounded-3xl border border-[#dcebe8] bg-white p-5">
 
-            <h3 className="text-base font-black text-[#17345f] dark:text-white">
+            <h3 className="text-base font-black text-[#17345f] dark:text-black">
               Your difficulty level
             </h3>
 
@@ -543,7 +543,7 @@ export default function GameResult() {
 
             </div>
 
-            <p className="mt-4 text-xs leading-5 text-slate-400">
+            <p className="mt-4 text-xs leading-5 text-green">
               Each successful level makes the activity slightly more challenging,
               helping the user practice progressively.
             </p>
@@ -559,7 +559,7 @@ export default function GameResult() {
 
             <div className="flex items-start gap-4">
 
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white text-[#2f8f92] shadow-sm">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white text-blue shadow-sm">
 
                 <Heart
                   size={24}
@@ -570,11 +570,11 @@ export default function GameResult() {
 
               <div>
 
-                <h3 className="text-lg font-black text-[#17345f] dark:text-white">
+                <h3 className="text-lg font-black text-[#17345f] dark:text-black">
                   Every activity counts 💚
                 </h3>
 
-                <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">
+                <p className="mt-1 text-sm leading-6 text-black dark:text-black">
                   Keep taking part in activities at your own pace.
                   There is no need to rush. Regular practice can
                   make activities more comfortable over time.
@@ -640,7 +640,7 @@ export default function GameResult() {
               FINAL MESSAGE
               ================================================= */}
 
-          <div className="mt-7 flex items-center justify-center gap-2 text-center text-xs font-semibold text-slate-400">
+          <div className="mt-7 flex items-center justify-center gap-2 text-center text-xs font-semibold text-black">
 
             <Sparkles size={15} />
 
