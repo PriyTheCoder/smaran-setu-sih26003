@@ -6,6 +6,7 @@ export default function InitialAssessment() {
   const navigate = useNavigate()
 
   const { role, profile, saveProfile } = useAuth()
+  console.log('Assessment profile:', profile)
 
   const handleComplete = async (assessment) => {
     if (!profile?.userId) {
