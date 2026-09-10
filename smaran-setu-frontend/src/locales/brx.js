@@ -25,7 +25,6 @@ const brx = {
 
   language: "राव",
   selectLanguage: "रावखौ सायख",
-
   notifications: "खबर",
 
   goodMorning: "मोजां फुं",
@@ -46,6 +45,55 @@ const brx = {
   submit: "दाखिल खालाम",
   back: "फिन",
   next: "उनाव",
+
+  // Home page
+  playGames: "खेल खेल",
+  memoryActivities: "नोंनि सावरायनायनि थाखाय मोनसे रंजानाय हारिमु",
+  myMemories: "आंनि सावरायनायफोर",
+  peopleMoments: "आं मोजां मोननाय मानसि आरो समफोर",
+  myRoutine: "आंनि रोजा रोजा हारिमु",
+  seeNext: "उनाव मा जादों नाय",
+  myProgress: "आंनि सोलोंनाय",
+  seeDoing: "आं माबोरै खालामदों नाय",
+  open: "खोल",
+
+  welcomeSmaran: "स्मरण सेतुयाव थांनो हाबाय",
+  hello: "नमस्कार",
+  welcomeBack: "नोंनि निजि जायगायाव फिन हाबाय।",
+  happyActive: "दिनखौ मोनसे खुसी आरो सक्रिय दिन खालामनो जों जायगा हो।",
+
+  doingGreat: "नों दा मोजां खालामदों!",
+  todaysWellness: "दिनैनि मोजां मोन आरो सुस्वास्थ्य",
+  keepMindActive: "नोंनि मोनखौ सक्रिय होनाय थाय",
+
+  simpleActivities:
+    "मोनसे मोनसे सहज हारिमुआ नोंनि दिनखौ आरो रंजानाय खालामनो हायो।",
+
+  activitiesDone: "जाबाय हारिमुफोर",
+  dailyGoal: "साननि थाखो",
+
+  excellent: "मोजांबाद!",
+  almostThere: "फिसाजोबाय!",
+  keepGoing: "सोलिबाय था!",
+
+  yourSpace: "नोंनि जायगा",
+  whatDo: "नों मा खालामनो लुबैयो?",
+  chooseEnjoy: "नों रंजानो लुबैनाय मोनसे हारिमु सायख।",
+
+  nextActivity: "उनावनि हारिमु",
+  memoryMatch: "मेमोरी मैच",
+
+  memoryExercise:
+    "नोंनि सावरायनायखौ जौगाहोनो मोनसे फिसा आरो रंजानाय हारिमु।",
+
+  startActivity: "हारिमु जागाय",
+
+  everyStep: "गासै फिसा फिसा सोलिबायनाय मोनसेबो गोनां",
+
+  takeYourTime:
+    "नोंनि सम लाबो, हारिमुफोरखौ रंजाबो आरो रोजा रोजा मोजां समफोर दानाय थाय।",
+
+  needHelp: "मदद नांगौ? स्मरणजों राव राव",
 };
 
 export default brx;
