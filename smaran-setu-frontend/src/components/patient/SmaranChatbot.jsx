@@ -361,7 +361,7 @@ const startListening = () => {
       text: userMessage,
     },
   ])
-
+try{
   setIsTyping(true)
 
 const response = await fetch(
