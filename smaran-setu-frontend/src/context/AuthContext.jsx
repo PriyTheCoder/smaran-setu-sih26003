@@ -55,6 +55,7 @@ export function AuthProvider({ children }) {
     })
 
     const data = await response.json()
+    console.log('🔥 LOGIN RESPONSE:', data)
 
     if (!response.ok) {
       throw new Error(data.error || 'Signup failed')
