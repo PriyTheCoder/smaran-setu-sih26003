@@ -11,7 +11,7 @@ const bn = {
   progress: "অগ্রগতি",
   reminders: "অনুস্মারক",
   memories: "স্মৃতিগুলি",
-
+  
   startGame: "খেলা শুরু করুন",
   playAgain: "আবার খেলুন",
   continue: "চালিয়ে যান",
